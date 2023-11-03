@@ -6,6 +6,7 @@ COPY . /app/mlflow-ext
 # RUN sudo apt-get install python3-dev python3-pip python3-venv python3-wheel -y
 RUN pip install --upgrade pip
 RUN pip install wheel setuptools --upgrade
-RUN pip install Cmake --upgrade
-RUN pip install cmake --upgrade
-RUN pip install /app/mlflow-ext
+# RUN pip install Cmake --upgrade
+# RUN pip install cmake --upgrade
+RUN cd /app/mlflow-ext && pip install .
+# RUN pip install /app/mlflow-ext
