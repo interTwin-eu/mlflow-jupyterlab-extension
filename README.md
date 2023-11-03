@@ -1,43 +1,77 @@
-# Template for interTwin repositories
+# MLFlow extension for JupyterLab
 
-This repository is to be used as a repository template for creating a new interTwin
-repository, and is aiming at being a clean basis promoting currently accepted
-good practices.
+This is meant to be tested for KubeFlow notebook servers,
+to allow interTwin
+use cases to access MLFlow functionalities from KubeFlow.
 
-It includes:
+## Usage
 
-- License information
-- Copyright and author information
-- Code of conduct and contribution guidelines
-- Templates for PR and issues
-- Code owners file for automatic assignment of PR reviewers
-- [GitHub actions](https://github.com/features/actions) workflows for linting
-  and checking links
+In JupyterLab, from a notebook:
 
-Content is based on:
+```python
+import mlflow
 
-- [Contributor Covenant](http://contributor-covenant.org)
-- [Semantic Versioning](https://semver.org/)
-- [Chef Cookbook Contributing Guide](https://github.com/chef-cookbooks/community_cookbook_documentation/blob/master/CONTRIBUTING.MD)
+# HTTP connection requires the server to be running!
+# Namely, you executed it by clicking on the extension
+# mlflow.set_tracking_uri('http://127.0.0.1:50001')
 
-## GitHub repository management rules
+# This is a "safer" approach, although it is bound to
+# the local filesystem
+mlflow.set_tracking_uri('mlflow_logs')
 
-All changes should go through Pull Requests.
+mlflow.set_experiment('test-exp')
+mlflow.start_run()
+mlflow.log_metric('my_metric', 17)
+mlflow.end_run()
+```
 
-### Merge management
+Now go to the MLFlow server extension to see the logs.
 
-- Only squash should be enforced in the repository settings.
-- Update commit message for the squashed commits as needed.
+## Developers
 
-### Protection on main branch
+This can be tested in a virtual environment based on
+Micromamba (conda).
 
-To be configured on the repository settings.
+### Micromamba installation
 
-- Require pull request reviews before merging
-  - Dismiss stale pull request approvals when new commits are pushed
-  - Require review from Code Owners
-- Require status checks to pass before merging
-  - GitHub actions if available
-  - Other checks as available and relevant
-  - Require branches to be up to date before merging
-- Include administrators
+To manage Conda environments we use micromamba, a light weight version of conda.
+
+It is suggested to refer to the
+[Manual installation guide](https://mamba.readthedocs.io/en/latest/micromamba-installation.html#umamba-install).
+
+Consider that Micromamba can eat a lot of space when building environments because packages are cached on
+the local filesystem after being downloaded. To clear cache you can use `micromamba clean -a`.
+Micromamba data are kept under the `$HOME` location. However, in some systems, `$HOME` has a limited storage
+space and it would be cleverer to install Micromamba in another location with more storage space.
+Thus by changing the `$MAMBA_ROOT_PREFIX` variable. See a complete installation example for Linux below, where the
+default `$MAMBA_ROOT_PREFIX` is overridden:
+
+```bash
+cd $HOME
+
+# Download micromamba (This command is for Linux Intel (x86_64) systems. Find the right one for your system!)
+curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
+
+# Install micromamba in a custom directory
+MAMBA_ROOT_PREFIX='my-mamba-root'
+./bin/micromamba shell init $MAMBA_ROOT_PREFIX
+
+# To invoke micromamba from Makefile, you need to add explicitly to $PATH
+echo 'PATH="$(dirname $MAMBA_EXE):$PATH"' >> ~/.bashrc
+```
+
+**Reference**: [Micromamba installation guide](https://mamba.readthedocs.io/en/latest/installation.html#micromamba).
+
+### Install the Python virtual environment
+
+Create the virtual environment through the Makefile:
+
+```bash
+make
+```
+
+### Test JupyterLab locally
+
+```bash
+micromamba run -p ./.venv jupyter-lab
+```
