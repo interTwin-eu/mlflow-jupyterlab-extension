@@ -27,7 +27,7 @@ def mlflow_conf():
         'command': _mlflow_command,
         'absolute_url': False,
         'port': 50001,
-        'timeout': 20,
+        'timeout': 30,
         'launcher_entry': {
             'title': 'MLFlow server',
             'icon_path': icon_path

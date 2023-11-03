@@ -4,6 +4,10 @@ This is meant to be tested for KubeFlow notebook servers,
 to allow interTwin
 use cases to access MLFlow functionalities from KubeFlow.
 
+It appears as:
+
+![mlflow_ext](img/mlflow_extension.png)
+
 ## Installation (KubeFlow)
 
 Create a new notebook server, using the image provided in
