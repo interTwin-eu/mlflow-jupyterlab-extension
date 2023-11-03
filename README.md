@@ -4,6 +4,14 @@ This is meant to be tested for KubeFlow notebook servers,
 to allow interTwin
 use cases to access MLFlow functionalities from KubeFlow.
 
+## Installation (KubeFlow)
+
+Create a new notebook server, using the image provided in
+[this repo](https://github.com/orgs/interTwin-eu/packages?repo_name=mlflow-jupyterlab-extension)
+as custom image:
+
+![new_notebook](img/new_notebook.png)
+
 ## Usage
 
 In JupyterLab, from a notebook:
@@ -28,6 +36,11 @@ mlflow.end_run()
 Now go to the MLFlow server extension to see the logs.
 
 ## Developers
+
+This extension is based on
+[Jupyter Server Proxy](https://github.com/jupyterhub/jupyter-server-proxy).
+Read the [docs](https://jupyter-server-proxy.readthedocs.io/en/latest/)
+for more info.
 
 This can be tested in a virtual environment based on
 Micromamba (conda).

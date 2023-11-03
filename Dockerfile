@@ -2,7 +2,7 @@
 FROM kubeflownotebookswg/jupyter-scipy:v1.7.0
 
 # COPY . /app/mlflow-ext
-ADD dist/mlflow_jupyterlab_extension-0.0.1-py3-none-any.whl mlflow_jupyterlab_extension-0.0.1-py3-none-any.whl
+ADD dist/my_wheel.whl my_wheel.whl
 
 # # RUN sudo apt-get install gcc libpq-dev -y
 # # RUN sudo apt-get install python-dev  python-pip -y
@@ -14,4 +14,4 @@ ADD dist/mlflow_jupyterlab_extension-0.0.1-py3-none-any.whl mlflow_jupyterlab_ex
 
 # RUN pip install /app/mlflow-ext
 # RUN cd /app/mlflow-ext && pip install .
-RUN pip install mlflow_jupyterlab_extension-0.0.1-py3-none-any.whl
+RUN pip install --no-cache-dir my_wheel.whl

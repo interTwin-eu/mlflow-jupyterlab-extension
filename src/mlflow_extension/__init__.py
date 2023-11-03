@@ -1,4 +1,10 @@
 import os
+# import pkg_resources
+
+try:
+    from importlib.resources import files
+except ImportError:
+    from importlib_resources import files
 
 
 def mlflow_conf():
@@ -14,6 +20,9 @@ def mlflow_conf():
         )
         return cmd.split()
 
+    this_module_path = files('mlflow_extension')
+    icon_path = os.path.join(this_module_path, 'icons/MLflow-Logo.svg')
+
     return {
         'command': _mlflow_command,
         'absolute_url': False,
@@ -21,10 +30,6 @@ def mlflow_conf():
         'timeout': 20,
         'launcher_entry': {
             'title': 'MLFlow server',
-            'icon_path': os.path.join(
-                os.path.dirname(os.path.abspath(__file__)),
-                'icons',
-                'MLflow-Logo.svg'
-            )
+            'icon_path': icon_path
         }
     }
